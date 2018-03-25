@@ -1,0 +1,6 @@
+# data files
+/data/**
+/info/**
+
+# editor files
+**/.vscode

@@ -1,0 +1,92 @@
+
+.tabbed-pane__navigation-bar {  
+  width: 100%;
+}
+
+.tabbed-pane__navigation-bar ul {  
+  width: 100%;
+  background-color: whitesmoke;
+  list-style-type: none;
+  overflow: hidden;
+  margin: 0;
+  top: 0;
+  padding: 0;
+}
+
+.tabbed-pane__navigation-bar li {
+  float: left;
+}
+
+.tabbed-pane__navigation-bar li a {
+  font-weight: bold;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 20px 30px;
+  text-decoration: none;
+  cursor: default;
+}
+
+.tabbed-pane__navigation-bar li:hover {
+  background-color: rgb(216, 229, 252);
+}
+
+.tabbed-pane__navigation-bar li:first-child {
+  background-color: rgb(216, 229, 252);
+}
+
+.tabbed-pane__area {
+  display: block;
+}
+
+.tabbed-pane__area__plot-carousel {
+  position: relative;
+  float: left;
+  width: 75%;
+}
+
+.tabbed-pane__area__text-area {
+  float: right;
+  width: 25%;
+}
+
+.tabbed-pane__area__text-area h2 {
+   text-align: center;
+}
+
+.tabbed-pane__area__text-area table {
+  width: 100%;
+  text-align: left;
+}
+
+.tabbed-pane__area__text-area th {
+  background-color: whitesmoke;
+}
+
+.tabbed-tabbed-pane__area__plot-carousel__plot {
+  position: absolute;
+}
+
+.tabbed-pane__area__plot-carousel__btn-left {
+  top: 43%;
+  height: 5%;
+  width: 5%;
+  min-width: 20px;
+  min-height: 20px;
+  left: 1%;
+  position: absolute;
+}
+
+.tabbed-pane__area__plot-carousel__btn-right {
+  position: absolute;
+  height: 5%;
+  width: 5%;
+  min-width: 20px;
+  min-height: 20px;
+  right: 2%;
+  top:43%;
+}
+
+footer {
+  display: block;
+}

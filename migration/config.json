@@ -1,0 +1,24 @@
+{
+    "dataPattern" : "2012-*.xlsx",
+    "dataSuffix" : "all",
+    "databaseHost" : "localhost",
+    "batchSize" : 1000,
+    "databaseName": "Kiev_Weather_Data",
+    "tableName": "Weather",
+    "idField": "no",
+    "typeMapping" : {
+        "no": "INT",
+        "day" : "INT",
+        "month" : "INT",
+        "UTC" : "TIME",
+        "T": "INT",
+        "dd": "VARCHAR(50)",
+        "FF": "INT",
+        "ww": "VARCHAR(50)",
+        "N": "INT",
+        "vv": "DOUBLE",
+        "U": "VARCHAR(50)",
+        "PPP": "INT",
+        "hhh": "INT"
+    }
+}

@@ -1,0 +1,1 @@
+node ./migration/launcher.js %*

@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kiev_weather_data
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+app:
+  batch:
+    size: 100

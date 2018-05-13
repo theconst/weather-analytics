@@ -8,13 +8,11 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.AbstractMap;
-import java.util.Map.Entry;
 import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "raw_weather_data")
+@Table(name = "weather")
 public class RawWeatherData {
 
     private static final int YEAR = 2017;

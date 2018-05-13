@@ -29,7 +29,6 @@ class InterpolatingIterator<K, V, T extends Entry<K, V>> implements Iterator<T> 
         return sequence.hasNext() || !nextItems.isEmpty();
     }
 
-    //TODO: eliminate side effects
     @Override
     public T next() {
         if (!nextItems.isEmpty()) {

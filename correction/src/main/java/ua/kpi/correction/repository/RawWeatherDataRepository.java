@@ -1,13 +1,11 @@
 package ua.kpi.correction.repository;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
 import ua.kpi.correction.model.RawWeatherData;
 
 import javax.persistence.QueryHint;
-import java.util.Iterator;
 import java.util.stream.Stream;
 
 import static org.hibernate.jpa.QueryHints.HINT_FETCH_SIZE;

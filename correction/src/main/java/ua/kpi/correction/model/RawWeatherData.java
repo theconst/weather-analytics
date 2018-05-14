@@ -5,8 +5,6 @@ import ua.kpi.correction.model.conversion.WeatherDescriptionsAttributeConverter;
 import ua.kpi.correction.model.conversion.WindDirectionAttributeConverter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Set;
 
@@ -58,8 +56,4 @@ public class RawWeatherData {
 
     @Column(name = "hhh")
     private Integer cloudBottom; //
-
-    public LocalDateTime getFullDateTime() {
-        return LocalDateTime.of(LocalDate.of(YEAR, month, day), utcTime);
-    }
 }

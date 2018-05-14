@@ -41,7 +41,7 @@ public class WeatherDescriptionsAttributeConverter implements AttributeConverter
             return null;
         }
 
-        return Arrays.stream(firstNonNull(dbData, "").split(SEPARATOR))
+        return Arrays.stream(dbData.split(SEPARATOR))
                 .map(WeatherDescription::fromCode)
                 .collect(toSet());
     }

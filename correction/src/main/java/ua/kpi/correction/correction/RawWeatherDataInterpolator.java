@@ -49,8 +49,8 @@ public class RawWeatherDataInterpolator implements StreamInterpolator<RawWeather
                         RawWeatherData::setRangeOfVisibility))
                 .compose(interpolator(
                         RawWeatherData::getNumber,
-                        RawWeatherData::getWeatherDescription,
-                        RawWeatherData::setWeatherDescription));
+                        RawWeatherData::getPlainWeatherDescription,
+                        RawWeatherData::setPlainWeatherDescription));
     }
 
     @Override

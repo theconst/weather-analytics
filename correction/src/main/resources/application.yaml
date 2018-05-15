@@ -6,7 +6,9 @@ spring:
   jpa:
     properties:
       hibernate:
-        show_sql: true
-app:
-  batch:
-    size: 100
+        show_sql: false
+        hbm2ddl:
+          auto: update
+        jdbc:
+          batch_size: 2000
+        order_inserts: true

@@ -1,29 +1,43 @@
 package ua.kpi.correction.model;
 
-import lombok.Data;
-import ua.kpi.correction.model.conversion.WeatherDescriptionsAttributeConverter;
+import lombok.*;
 import ua.kpi.correction.model.conversion.WindDirectionAttributeConverter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.Collection;
+import java.util.Objects;
+
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.MODULE)
+@Builder
 @Entity
 @Table(name = "weather")
 public class RawWeatherData {
 
-    private static final int YEAR = 2017;
+    private static final String SEPARATOR = "\\+";
 
     @Id
     @Column(name = "no")
     private Integer number;
+
+    @Column(name = "year")
+    private Integer year;
 
     @Column(name = "day")
     private Integer day;
 
     @Column(name = "month")
     private Integer month;
+
+    @Column(name = "timestamp")
+    private LocalDateTime timestamp;
 
     @Column(name = "UTC")
     private LocalTime utcTime;
@@ -45,8 +59,7 @@ public class RawWeatherData {
     private Integer averageWindSpeed; //
 
     @Column(name = "ww")
-    @Convert(converter = WeatherDescriptionsAttributeConverter.class)
-    private Set<WeatherDescription> weatherDescription; //
+    private String plainWeatherDescription; //
 
     @Column(name = "N")
     private Integer numberOfClouds; //
@@ -56,4 +69,21 @@ public class RawWeatherData {
 
     @Column(name = "hhh")
     private Integer cloudBottom; //
+
+    @Transient
+    public Collection<WeatherDescription> getWeatherDescription() {
+        return stream(plainWeatherDescription.split(SEPARATOR))
+                .map(WeatherDescription::fromCode)
+                .collect(toList());
+    }
+
+    @Transient
+    public void setWeatherDescription(Collection<WeatherDescription> weatherDescription) {
+        setPlainWeatherDescription(weatherDescription.stream()
+                .filter(Objects::nonNull)
+                .map(WeatherDescription::getCode)
+                .collect(joining(SEPARATOR))
+        );
+    }
+
 }

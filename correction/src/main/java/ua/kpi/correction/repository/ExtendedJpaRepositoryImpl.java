@@ -16,13 +16,4 @@ public class ExtendedJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
         this.entityManager = entityManager;
     }
 
-    public List<T> saveAndFlushAll(Iterable<T> entities) {
-        final List<T> result = saveAll(entities);
-
-        entityManager.flush();
-        entityManager.clear();
-
-        return result;
-    }
-
 }

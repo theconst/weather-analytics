@@ -6,5 +6,4 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface ExtendedJpaRepository<T, ID> extends CrudRepository<T, ID> {
 
-//    List<T> saveAndFlushAll(Iterable<T> entities);
 }

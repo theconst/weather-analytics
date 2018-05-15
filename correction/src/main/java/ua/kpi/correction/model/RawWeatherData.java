@@ -43,32 +43,32 @@ public class RawWeatherData {
     private LocalTime utcTime;
 
     @Column(name = "T")
-    private Integer temperature; //
+    private Integer temperature;
 
     @Column(name = "U")
     private String relativeHumidity;
 
     @Column(name = "PPP")
-    private Integer pressure; //
+    private Integer pressure;
 
     @Column(name = "dd")
     @Convert(converter = WindDirectionAttributeConverter.class)
-    private WindDirection windDirection; //
+    private WindDirection windDirection;
 
     @Column(name = "FF")
-    private Integer averageWindSpeed; //
+    private Integer averageWindSpeed;
 
     @Column(name = "ww")
-    private String plainWeatherDescription; //
+    private String plainWeatherDescription;
 
     @Column(name = "N")
-    private Integer numberOfClouds; //
+    private Integer numberOfClouds;
 
     @Column(name = "vv")
-    private String rangeOfVisibility; //
+    private String rangeOfVisibility;
 
     @Column(name = "hhh")
-    private Integer cloudBottom; //
+    private Integer cloudBottom;
 
     @Transient
     public Collection<WeatherDescription> getWeatherDescription() {

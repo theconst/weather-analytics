@@ -67,6 +67,7 @@ async function migrate(config, options) {
             .mergeMap(helpers.toLines)
             .let(helpers.zipWithFirst())
             .filter(([heading, line]) => heading != line)
+            .map(([heading, line]) => [`${heading},year`, `${line},${config.year}`])
             .map(([heading, line]) => [heading.split(','), line.split(',')])
             .map(helpers.zipToObj)
             .bufferCount(config.batchSize)

@@ -1,5 +1,6 @@
 {
     "dataPattern" : "2012-*.xlsx",
+    "year" : 2012,
     "dataSuffix" : "all",
     "databaseHost" : "localhost",
     "batchSize" : 1000,
@@ -10,6 +11,7 @@
         "no": "INT",
         "day" : "INT",
         "month" : "INT",
+        "year" : "INT",
         "UTC" : "TIME",
         "T": "INT",
         "dd": "VARCHAR(50)",

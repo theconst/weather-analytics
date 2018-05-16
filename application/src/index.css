@@ -1,4 +1,6 @@
 
+/* TODO: split according to functional responsibility */
+
 .tabbed-pane__navigation-bar {  
   width: 100%;
 }
@@ -54,11 +56,6 @@
    text-align: center;
 }
 
-.tabbed-pane__area__text-area table {
-  width: 100%;
-  text-align: left;
-}
-
 .tabbed-pane__area__text-area th {
   background-color: whitesmoke;
 }
@@ -86,6 +83,35 @@
   right: 2%;
   top:43%;
 }
+
+.tabbed-pane__area__text-area label {
+  display: block;
+  margin: 1%;
+}
+
+.tabbed-pane__area__text-area input {
+  display: block;
+  height: 30px;
+  margin: 0 auto;
+  width: 92%;
+}
+
+.tabbed-pane__area__text-area input[type=submit] {
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+  height : 40px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: whitesmoke;
+  box-shadow: none;
+  border: none;
+}
+
+.tabbed-pane__area__text-area input[type=submit]:hover {
+  background-color: rgb(216, 229, 252);
+}
+
 
 footer {
   display: block;

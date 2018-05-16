@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Bar, Polar } from 'react-chartjs-2';
 import * as config from './config.json';
 import * as back from './back.svg';
 import * as next from './next.svg';
@@ -15,18 +15,16 @@ export class TabbedPane extends Component {
             startDate: new Date(),
             endDate: new Date(),
             //TODO: remove this stub
-            temperatureTimeData: [
-                {
-                    x: 10,
-                    y: 20
-                },
-                {
-                    x: 15,
-                    y: 10
-                }
+            tempTimeData: [
+                { x: 10, y: 20 },
+                { x: 15, y: 10 }
             ],
-            modeLabels: ['Label 1', 'Label 2'],
-            modeData: [300, 400],
+            tempModeLabels: ['Temp Label 1', 'Temp Label 2'],
+            tempModeData: [300, 400],
+
+            windModeLabels: ['Wind Label 1', 'Wind Label 2'],
+            windModeData: [500, 600],
+            windRoseData:  [10, 10, 10, 10, 10, 10, 10, 30],
         }
     }
 
@@ -38,33 +36,58 @@ export class TabbedPane extends Component {
         this.setState({ endDate: event.target.value });
     }
 
+    getTotalHoursBy(timeData, fName) {
+        const totalHours = timeData
+                    .reduce((map, point, i) => {
+                        const fValue = point[fName];
+
+                        // time of the first item is always zero
+                        const prevDate = new Date(timeData[Math.max(0, i - 1)].time);
+                        const nextDate = new Date(timeData[i].time);
+                        const samplingHours = (nextDate - prevDate) / 1000 / 3600;
+                        return map.set(fValue, (map.get(fValue) || 0.0) + samplingHours);
+                    }, new Map());
+
+        const labels = Array.from(totalHours.keys()).sort((a, b) => a - b);
+        return {
+            labels : labels,
+            data : labels.map(l => totalHours.get(l))
+        };
+    }
+
+    getTimeDataBy(timeData, fName) {
+        return timeData.map(point => {
+                return { x: point.time, y: point[fName] };
+        });
+    }
+
     updatePlots(event) {
         fetch(`/temperatureData?from=${this.state.startDate}&to=${this.state.endDate}`)
             .then(resp => resp.json())
             .then(temperatureTimeData => {
-                const timePlotData = temperatureTimeData
-                    .map(({ temperature, time }) => {
-                        return { x: time, y: temperature }
-                    });
-
-                const totalHoursByTemperature = temperatureTimeData
-                    .reduce((map, { temperature, time }, i) => {
-                        // time of the first item is always zero
-                        const prevDate = new Date(temperatureTimeData[Math.max(0, i - 1)].time);
-                        const nextDate = new Date(temperatureTimeData[i].time);
-                        const samplingHours = (nextDate - prevDate) / 1000 / 3600;
-                        return map.set(temperature, (map.get(temperature) || 0.0) + samplingHours);
-                    }, new Map());
-                const modeLabels = Array.from(totalHoursByTemperature.keys()).sort();
-                const modeData = modeLabels.map(l => totalHoursByTemperature.get(l));
+                const totalHoursByTemperature = this.getTotalHoursBy(temperatureTimeData, "temperature");
 
                 this.setState({
-                    temperatureTimeData: timePlotData,
-                    modeLabels: modeLabels,
-                    modeData: modeData
+                    tempTimeData: this.getTimeDataBy(temperatureTimeData, "temperature"),
+                    tempModeLabels: totalHoursByTemperature.labels,
+                    tempModeData: totalHoursByTemperature.data
                 });
             })
             .catch(e => console.error(e));  //TODO: provide feedback
+
+
+            // TODO: generify this, remove copying and pasting
+        fetch(`/windData/speed?from=${this.state.startDate}&to=${this.state.endDate}`)
+            .then(resp => resp.json())
+            .then(windTimeData => {
+                const totalbHoursByWindSpeed = this.getTotalHoursBy(windTimeData, "windSpeed");
+                this.setState({
+                    windModeLabels: totalbHoursByWindSpeed.labels,
+                    windModeData: totalbHoursByWindSpeed.data,
+                });
+            })
+            .catch(e => console.error(e));  //TODO: provide feedback
+
         event.preventDefault();
     }
 
@@ -79,25 +102,59 @@ export class TabbedPane extends Component {
                 </div>
                 <main className="tabbed-pane__area">
                     <PlotCarousel>
-                        <Line data={{
+                        <Line
+                        options={{
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        displayFormats: {
+                                            quarter: 'MMM YYYY'
+                                        }
+                                    }
+                                }]
+                            }
+                        }}
+                        
+                        data={{
                             datasets: [
                                 {
-                                    label: config.plotsNames.timePlot,
-                                    data: this.state.temperatureTimeData,
+                                    label: config.plotsNames.tempTimePlot,
+                                    data: this.state.tempTimeData,
                                     fill: false,
                                     borderDash: [5, 5]
                                 },
                             ],
                         }} />
                         <Bar data={{
-                            labels: this.state.modeLabels,
+                            labels: this.state.tempModeLabels,
                             datasets: [
                                 {
-                                    label: config.plotsNames.modePlot,
-                                    data: this.state.modeData,
+                                    label: config.plotsNames.tempModePlot,
+                                    data: this.state.tempModeData,
                                 },
                             ],
                         }} />
+                        <Bar data={{
+                            labels: this.state.windModeLabels,
+                            datasets: [
+                                {
+                                    label: config.plotsNames.windModePlot,
+                                    data: this.state.windModeData,
+                                },
+                            ],
+                        }} />  
+                        <Polar 
+                            data = {{
+                                labels: ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+                                datasets: [{
+                                  data: this.state.windRoseData,
+                                }]
+                            }}
+                            options = {{
+                                startAngle: - 5 * Math.PI / 8,
+                            }}
+                        />
                     </PlotCarousel>
                     <div className="tabbed-pane__area__text-area">
                         <h2>Дані</h2>

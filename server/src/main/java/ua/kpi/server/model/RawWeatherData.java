@@ -19,7 +19,8 @@ import static java.util.stream.Collectors.toList;
 @Builder
 @Entity
 @Table(name = "weather")
-public class RawWeatherData implements TemperatureDataPointProjection {
+public class RawWeatherData
+        implements TemperatureDataPointProjection, WindSpeedProjection, WindSpeedAndDirectionProjection {
 
     private static final String SEPARATOR = "\\+";
 

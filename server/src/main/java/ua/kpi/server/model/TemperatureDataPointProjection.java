@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
+import java.util.Map;
 
 public interface TemperatureDataPointProjection {
 
@@ -14,6 +16,10 @@ public interface TemperatureDataPointProjection {
 
     @JsonProperty("temperature")
     Integer getTemperature();
+
+    default Map.Entry<LocalDateTime, Integer> toTemperatureDataPoint() {
+        return new AbstractMap.SimpleEntry<>(getTimestamp(), getTemperature());
+    }
 
     @Data
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,4 +1,4 @@
-package ua.kpi.server.batch;
+package ua.kpi.server.util;
 
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Streams;

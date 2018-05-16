@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import ua.kpi.server.model.RawWeatherData;
 import ua.kpi.server.model.TemperatureDataPointProjection;
+import ua.kpi.server.model.WindSpeedAndDirectionProjection;
+import ua.kpi.server.model.WindSpeedProjection;
 
 import javax.persistence.QueryHint;
 import java.time.LocalDateTime;
@@ -21,6 +23,18 @@ public interface RawWeatherDataRepository extends EagerStreamingPagingAndSorting
     @Query("SELECT w FROM RawWeatherData w " +
             "WHERE w.timestamp BETWEEN :from AND :to " +
             "ORDER BY w.timestamp")
-    Stream<TemperatureDataPointProjection> findTemperatureDataBetween(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+    Stream<TemperatureDataPointProjection> findTemperatureDataBetweenOrderByTimestamp(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+
+    @QueryHints(value = @QueryHint(name = HINT_FETCH_SIZE, value = "" + Integer.MIN_VALUE))
+    @Query("SELECT w FROM RawWeatherData w " +
+            "WHERE w.timestamp BETWEEN :from AND :to " +
+            "ORDER BY w.timestamp")
+    Stream<WindSpeedProjection> findWindSpeedDataBetweenOrderByTimestamp(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+
+    @QueryHints(value = @QueryHint(name = HINT_FETCH_SIZE, value = "" + Integer.MIN_VALUE))
+    @Query("SELECT w FROM RawWeatherData w " +
+            "WHERE w.timestamp BETWEEN :from AND :to " +
+            "ORDER BY w.timestamp")
+    Stream<WindSpeedAndDirectionProjection> findWindSpeedAndDirectionBetweenOrderByTimestamp(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
 }

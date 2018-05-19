@@ -29,6 +29,8 @@ import static ua.kpi.server.controller.ApiConstants.DATE_TIME_FORMAT;
 @RequestMapping("windData")
 public class WindController {
 
+    private static final int PERCENTS = 100;
+
     private final RawWeatherDataRepository weatherDataRepository;
 
     private final Double calmThreshold;
@@ -68,7 +70,10 @@ public class WindController {
                 .sum();
 
         return nonCalmEntriesByDirection.entrySet().stream()
-                .collect(toMap(e -> e.getKey().getAbbreviation(), e -> e.getValue().doubleValue() / total));
+                .collect(toMap(
+                        e -> e.getKey().getAbbreviation(),
+                        e -> (e.getValue().doubleValue() * PERCENTS) / total)
+                );
     }
 
     private Stream<WindSpeedAndDirectionProjection> getWindSpeedAndDirection(LocalDateTime fromTime, LocalDateTime toTime) {

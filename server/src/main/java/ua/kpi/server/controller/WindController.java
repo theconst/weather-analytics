@@ -36,7 +36,7 @@ public class WindController {
     @Autowired
     public WindController(
             RawWeatherDataRepository weatherDataRepository,
-            @Value("app.wind.calm-threshold:0.5") Double calmThreshold) {
+            @Value("${app.wind.calm-threshold:0.5}") Double calmThreshold) {
         this.weatherDataRepository = weatherDataRepository;
         this.calmThreshold = calmThreshold;
     }

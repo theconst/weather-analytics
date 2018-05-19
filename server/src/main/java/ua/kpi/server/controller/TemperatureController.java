@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static ua.kpi.server.controller.ApiConstants.DATE_TIME_FORMAT;
 
 
 @Transactional
@@ -31,8 +32,8 @@ public class TemperatureController {
 
     @GetMapping
     public List<TemperatureDataPointProjection> getTemperatureDataPointsBetween(
-            @RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @RequestParam(name = "from") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime from,
+            @RequestParam(name = "to") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime to,
             @RequestParam(name = "limit", required = false, defaultValue = "2000") Integer limit) {
         final int count = weatherDataRepository.countByTimestampBetween(from, to);
         final int numberOfBuckets = (count / limit) + 1;

@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static java.util.stream.Collectors.*;
+import static ua.kpi.server.controller.ApiConstants.DATE_TIME_FORMAT;
 
 @Transactional
 @RestController
@@ -42,8 +43,8 @@ public class WindController {
 
     @GetMapping("speed")
     public List<WindSpeedProjection> getWindDataBetween(
-            @RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @RequestParam(name = "from") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime from,
+            @RequestParam(name = "to") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime to,
             @RequestParam(name = "limit", required = false, defaultValue = "2000") Integer limit) {
         final int count = weatherDataRepository.countByTimestampBetween(from, to);
         final int numberOfBuckets = (count / limit) + 1;
@@ -54,9 +55,9 @@ public class WindController {
     }
 
     @GetMapping("rose")
-    public Map<WindDirection, Double> getWindRoseBetween(
-            @RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+    public Map<String, Double> getWindRoseBetween(
+            @RequestParam(name = "from") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime from,
+            @RequestParam(name = "to") @DateTimeFormat(pattern = DATE_TIME_FORMAT) LocalDateTime to) {
         final Map<WindDirection, Long> nonCalmEntriesByDirection = getWindSpeedAndDirection(from, to)
                 .filter(windSpeedAndDirection ->
                         firstNonNull(windSpeedAndDirection.getAverageWindSpeed(), Integer.MIN_VALUE) >= calmThreshold)
@@ -67,7 +68,7 @@ public class WindController {
                 .sum();
 
         return nonCalmEntriesByDirection.entrySet().stream()
-                .collect(toMap(Map.Entry::getKey, e -> e.getValue().doubleValue() / total));
+                .collect(toMap(e -> e.getKey().getAbbreviation(), e -> e.getValue().doubleValue() / total));
     }
 
     private Stream<WindSpeedAndDirectionProjection> getWindSpeedAndDirection(LocalDateTime fromTime, LocalDateTime toTime) {
@@ -75,7 +76,8 @@ public class WindController {
     }
 
     private Stream<Map.Entry<LocalDateTime, Integer>> getWindSpeed(LocalDateTime from, LocalDateTime to) {
-        return weatherDataRepository.findWindSpeedDataBetweenOrderByTimestamp(from, to).map(WindSpeedProjection::toWindSpeedDataPoint);
+        return weatherDataRepository.findWindSpeedDataBetweenOrderByTimestamp(from, to)
+                .map(WindSpeedProjection::toWindSpeedDataPoint);
     }
 
 }

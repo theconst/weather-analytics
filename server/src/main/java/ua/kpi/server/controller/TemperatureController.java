@@ -2,6 +2,7 @@ package ua.kpi.server.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,16 +31,13 @@ public class TemperatureController {
 
     @GetMapping
     public List<TemperatureDataPointProjection> getTemperatureDataPointsBetween(
-            @RequestParam(name = "from") String from,
-            @RequestParam(name = "to") String to,
+            @RequestParam(name = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @RequestParam(name = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
             @RequestParam(name = "limit", required = false, defaultValue = "2000") Integer limit) {
-        final LocalDateTime fromTime = LocalDateTime.parse(from);
-        final LocalDateTime toTime = LocalDateTime.parse(to);
-
-        final int count = weatherDataRepository.countByTimestampBetween(fromTime, toTime);
+        final int count = weatherDataRepository.countByTimestampBetween(from, to);
         final int numberOfBuckets = (count / limit) + 1;
 
-        return StreamPartitioner.partition(getTemperatureData(fromTime, toTime), numberOfBuckets)
+        return StreamPartitioner.partition(getTemperatureData(from, to), numberOfBuckets)
                 .map(bucket -> Average.ofInteger(bucket, TemperatureDataPointProjection::of))
                 .collect(toList());
     }

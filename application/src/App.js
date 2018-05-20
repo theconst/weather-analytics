@@ -56,28 +56,28 @@ class App extends Component {
           <Carousel key="plot">
               <TimePlot 
                   key="temperatureTimePlot" 
-                  endpoint="temperatureData"
+                  endpoint={`${config.server}/temperatureData`}
                   functionName="temperature"
                   datasetLabel={config.plotsNames.tempTimePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <ModePlot 
                   key="temperatureModePlot" 
-                  endpoint="temperatureData"
+                  endpoint={`${config.server}/temperatureData`}
                   functionName="temperature"
                   datasetLabel={config.plotsNames.tempModePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <ModePlot 
                   key="windModePlot"
-                  endpoint="windData/speed"
+                  endpoint={`${config.server}/windData/speed`}
                   functionName="windSpeed"
                   datasetLabel={config.plotsNames.windModePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <RosePlot 
                   key="windRosePlot"
-                  endpoint="windData/rose"
+                  endpoint={`${config.server}/windData/rose`}
                   datasetLabel={config.plotsNames.windModePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />

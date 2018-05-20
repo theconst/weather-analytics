@@ -1,6 +1,7 @@
 {
     "heading": "Меню",
     "tabNames": ["Аналіз метереологічних даних регіону"],
+    "server" : "http://localhost:8080/",
     "plotsNames": {
         "tempTimePlot" : "Температурні умови",
         "tempModePlot" : "Тривалість температурних режимів",

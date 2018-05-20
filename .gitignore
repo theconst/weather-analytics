@@ -1,6 +1,7 @@
 # data files
 /data/**
 /info/**
+/build_out/**
 
 # editor files
 **/.vscode

@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { AbstractUnmountablePlot } from './AbstractUnmountablePlot.js';
 import * as common from './common.js';
 
-export class ModePlot extends Component {
+export class ModePlot extends AbstractUnmountablePlot {
 
     constructor(props) {
         super(props);
@@ -15,31 +16,12 @@ export class ModePlot extends Component {
         }
     }
 
-    updatePlot() {
-        if (this.props.startDate && this.props.endDate) {
-            fetch(`/${this.props.endpoint}?from=${this.props.startDate}&to=${this.props.endDate}`)
-                .then(resp => resp.json())
-                .then(timeData => {
-                    const totalHours = common.getTotalHoursBy(timeData, this.props.functionName);
-                    this._isMounted && this.setState({
-                        labels: totalHours.labels,
-                        data: totalHours.data,
-                    });
-                })
-                .catch(e => console.error(e));
-        }
-    }
-
-    componentDidUpdate() {
-        this.updatePlot();
-    }
-
-    componentDidMount() {
-        setTimeout(100, () => this._isMounted && this.updatePlot());
-    }
-
-    componentWillUnmount() {
-       this._isMounted = false;
+    _handleDataset(data) {
+        const totalHours = common.getTotalHoursBy(data, this.props.functionName);
+        this.setState({
+            labels: totalHours.labels,
+            data: totalHours.data,
+        });
     }
 
     render() {

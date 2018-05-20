@@ -33,69 +33,79 @@ class App extends Component {
       event.preventDefault();
   }
 
+  componentDidMount() {
+    fetch(`/timeData/range`)
+      .then(resp => resp.json())
+      .then(timeRange => {
+          this.setState({
+              startDate: timeRange.from,
+              endDate: timeRange.to,
+          });
+      })
+      .catch(e => console.error(e));
+  }
+
   render() {
-      return (
-          <div className="tabbed-pane">
-              <div key="nav-bar" className="tabbed-pane__navigation-bar">
-                  <ul>
-                      <li><a>{config.heading}</a></li>
-                      {config.tabNames.map((name, i) => <li key={i}><a>{name}</a></li>)}
-                  </ul>
-              </div>
-              <main className="tabbed-pane__area">
-                  <Carousel>
-                      <TimePlot 
-                          key="temperatureTimePlot" 
-                          endpoint="temperatureData"
-                          functionName="temperature"
-                          datasetLabel={config.plotsNames.tempTimePlot}
-                          startDate={this.state.submittedStart} 
-                          endDate={this.state.submittedEnd} />
-                      <ModePlot 
-                          key="temperatureModePlot" 
-                          endpoint="temperatureData"
-                          functionName="temperature"
-                          datasetLabel={config.plotsNames.tempModePlot}
-                          startDate={this.state.submittedStart} 
-                          endDate={this.state.submittedEnd} />
-                      <ModePlot 
-                          key="windModePlot"
-                          endpoint="windData/speed"
-                          functionName="windSpeed"
-                          datasetLabel={config.plotsNames.windModePlot}
-                          startDate={this.state.submittedStart} 
-                          endDate={this.state.submittedEnd} />
-                      <RosePlot 
-                          key="windRosPlot"
-                          endpoint="windData/rose"
-                          datasetLabel={config.plotsNames.windModePlot}
-                          startDate={this.state.submittedStart} 
-                          endDate={this.state.submittedEnd} />
-                  </Carousel>
-                  <div className="tabbed-pane__area__text-area">
-                      <h2>Дані</h2>
-                      <form onSubmit={this.updatePlots.bind(this)} >
-                          <label htmlFor="from">Початок:</label>
-                          <input 
-                              name="from" 
-                              type="datetime-local" 
-                              value={this.state.startDate} 
-                              onChange={this.handleFromChange.bind(this)} />
-                          <label htmlFor="to">Кінець:</label>
-                          <input 
-                              name="to" 
-                              type="datetime-local" 
-                              value={this.state.endDate} 
-                              onChange={this.handleToChange.bind(this)} />
-                          <input type="submit" value="Завантажити" />
-                      </form>
-                  </div>
-              </main>
-              <footer>
-                Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
-              </footer>
-          </div>
-      );
+      return [
+          <nav key="nav-bar" className="navigation-bar">
+              <ul className="navigation-bar__items">
+                  <li key="-1" className="navigation-bar__item navigation-bar__item--heading"><a>{config.heading}</a></li>
+                  {config.tabNames.map((name, i) => <li key={i} className="navigation-bar__item"><a>{name}</a></li>)}
+              </ul>
+          </nav>,
+          <Carousel key="plot">
+              <TimePlot 
+                  key="temperatureTimePlot" 
+                  endpoint="temperatureData"
+                  functionName="temperature"
+                  datasetLabel={config.plotsNames.tempTimePlot}
+                  startDate={this.state.submittedStart} 
+                  endDate={this.state.submittedEnd} />
+              <ModePlot 
+                  key="temperatureModePlot" 
+                  endpoint="temperatureData"
+                  functionName="temperature"
+                  datasetLabel={config.plotsNames.tempModePlot}
+                  startDate={this.state.submittedStart} 
+                  endDate={this.state.submittedEnd} />
+              <ModePlot 
+                  key="windModePlot"
+                  endpoint="windData/speed"
+                  functionName="windSpeed"
+                  datasetLabel={config.plotsNames.windModePlot}
+                  startDate={this.state.submittedStart} 
+                  endDate={this.state.submittedEnd} />
+              <RosePlot 
+                  key="windRosePlot"
+                  endpoint="windData/rose"
+                  datasetLabel={config.plotsNames.windModePlot}
+                  startDate={this.state.submittedStart} 
+                  endDate={this.state.submittedEnd} />
+          </Carousel>,
+          <aside key="input" className="input-area">
+            <h2 className="input-area__title">Вибір інтервалу</h2>
+            <form onSubmit={this.updatePlots.bind(this)} >
+                <input 
+                    name="from" 
+                    title="Початок"
+                    className="input-area__item"
+                    type="datetime-local" 
+                    value={this.state.startDate} 
+                    onChange={this.handleFromChange.bind(this)} />
+                <input 
+                    name="to"
+                    title="Кінець"
+                    className="input-area__item"
+                    type="datetime-local" 
+                    value={this.state.endDate} 
+                    onChange={this.handleToChange.bind(this)} />
+                <input className="input-area__item input-area__item--submit" type="submit" value="Завантажити" />
+            </form>
+          </aside>,
+          <footer key="footer" className="footer">
+            Application by <a href="https://github.com/TheConst">Kostiantyn Kovalchuk</a>. Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+          </footer>
+      ];
   }
 }
 

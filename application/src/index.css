@@ -1,11 +1,12 @@
+#root {
+  display: block;
+}
 
-/* TODO: split according to functional responsibility */
-
-.tabbed-pane__navigation-bar {  
+.navigation-bar {  
   width: 100%;
 }
 
-.tabbed-pane__navigation-bar ul {  
+.navigation-bar__items {  
   width: 100%;
   background-color: whitesmoke;
   list-style-type: none;
@@ -15,11 +16,11 @@
   padding: 0;
 }
 
-.tabbed-pane__navigation-bar li {
+.navigation-bar__item {
   float: left;
 }
 
-.tabbed-pane__navigation-bar li a {
+.navigation-bar__item a {
   font-weight: bold;
   display: block;
   color: black;
@@ -29,76 +30,55 @@
   cursor: default;
 }
 
-.tabbed-pane__navigation-bar li:hover {
+.navigation-bar__item:hover {
   background-color: rgb(216, 229, 252);
 }
 
-.tabbed-pane__navigation-bar li:first-child {
+.navigation-bar__item--heading {
   background-color: rgb(216, 229, 252);
 }
 
-.tabbed-pane__area {
-  display: block;
-}
-
-.tabbed-pane__area__plot-carousel {
+.carousel {
   position: relative;
   float: left;
   width: 75%;
 }
 
-.tabbed-pane__area__text-area {
+.input-area {
   float: right;
   width: 25%;
 }
 
-.tabbed-pane__area__text-area h2 {
+.input-area__title {
    text-align: center;
 }
 
-.tabbed-pane__area__text-area th {
-  background-color: whitesmoke;
+.carousel__item {
+  z-index: -1;
 }
 
-.tabbed-tabbed-pane__area__plot-carousel__plot {
+.carousel__btn {
   position: absolute;
-}
-
-.tabbed-pane__area__plot-carousel__btn-left {
   top: 43%;
   height: 5%;
   width: 5%;
   min-width: 20px;
   min-height: 20px;
-  left: 1%;
-  position: absolute;
+  z-index: 0;
 }
 
-.tabbed-pane__area__plot-carousel__btn-right {
-  position: absolute;
-  height: 5%;
-  width: 5%;
-  min-width: 20px;
-  min-height: 20px;
+.carousel__btn--left {
+  left: 2%;
+}
+
+.carousel__btn--right {
   right: 2%;
-  top:43%;
 }
 
-.tabbed-pane__area__text-area label {
+.input-area__item {
   display: block;
-  margin: 1%;
-}
-
-.tabbed-pane__area__text-area input {
-  display: block;
-  height: 30px;
+  position: relative;
   margin: 0 auto;
-  width: 92%;
-}
-
-.tabbed-pane__area__text-area input[type=submit] {
-  margin: 0 auto;
-  display: block;
   margin-top: 15px;
   height : 40px;
   border-radius: 5px;
@@ -106,13 +86,16 @@
   background-color: whitesmoke;
   box-shadow: none;
   border: none;
+  width: 92%;
 }
 
-.tabbed-pane__area__text-area input[type=submit]:hover {
+.input-area__item--submit:hover {
   background-color: rgb(216, 229, 252);
 }
 
-
-footer {
-  display: block;
+.footer {
+  position: absolute;
+  text-align: center;
+  margin: 5px;
+  bottom: 0;
 }

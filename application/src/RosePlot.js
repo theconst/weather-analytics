@@ -1,45 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { AbstractUnmountablePlot } from './AbstractUnmountablePlot.js';
 import { Polar } from 'react-chartjs-2';
 
 const STARTING_ANGLE = -5 * Math.PI / 8;
 
-export class RosePlot extends Component {
+export class RosePlot extends AbstractUnmountablePlot {
 
     constructor(props) {
         super(props);
 
         this.labels = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-        this._isMounted = true;
 
         this.state = {
             data: [0, 0, 0, 0, 0, 0, 0, 0],
         }
     }
 
-
-    updatePlot() {
-        if (this.props.startDate && this.props.endDate) {
-            fetch(`/${this.props.endpoint}?from=${this.props.startDate}&to=${this.props.endDate}`)
-                .then(resp => resp.json())
-                .then(data => {
-                    this._isMounted && this.setState({
-                        data: this.labels.map(label => (data[label] || 0).toFixed(2)),
-                    });
-                })
-                .catch(e => console.error(e));
-        }
-    }
-
-    componentDidUpdate() {
-        this.updatePlot();
-    }
-
-    componentDidMount() {
-        setTimeout(100, () => this._isMounted && this.updatePlot());
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
+    _handleDataset(data) {
+        this.setState({
+            data: this.labels.map(label => (data[label] || 0).toFixed(2)),
+        });
     }
 
     render() {

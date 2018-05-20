@@ -1,43 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { AbstractUnmountablePlot } from './AbstractUnmountablePlot.js';
 import { Line } from 'react-chartjs-2';
 import *  as common from './common.js';
 
-export class TimePlot extends Component {
+export class TimePlot extends AbstractUnmountablePlot {
 
     constructor(props) {
         super(props);
-
-        this._isMounted = true;
 
         this.state = {
             timeData: [],
         }
     }
 
-    // TODO: make class abstract for plots to reuse code
-    updatePlot() {
-        if (this.props.startDate && this.props.endDate) {
-            fetch(`/${this.props.endpoint}?from=${this.props.startDate}&to=${this.props.endDate}`)
-                .then(resp => resp.json())
-                .then(timeData => {
-                    this._isMounted && this.setState({
-                        timeData: common.getTimeDataBy(timeData, "temperature"),
-                    });
-                })
-                .catch(e => console.error(e));
-        }
-    }
-
-    componentDidUpdate() {
-        this.updatePlot();
-    }
-
-    componentDidMount() {
-        setTimeout(100, () => this._isMounted && this.updatePlot());
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
+    _handleDataset(data) {
+        this.setState({
+            timeData: common.getTimeDataBy(data, "temperature"),
+        });
     }
 
     render() {
@@ -54,7 +33,7 @@ export class TimePlot extends Component {
                                 }
                             }
                         }]
-                    }
+                    },
                 }}
             
                 data={{
@@ -63,7 +42,6 @@ export class TimePlot extends Component {
                             label: this.props.datasetLabel,
                             data: this.state.timeData,
                             fill: false,
-                            borderDash: [5, 5]
                         },
                     ],
                 }} />

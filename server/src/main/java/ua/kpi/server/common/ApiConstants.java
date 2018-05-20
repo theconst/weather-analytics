@@ -1,4 +1,4 @@
-package ua.kpi.server.controller;
+package ua.kpi.server.common;
 
 import lombok.experimental.UtilityClass;
 

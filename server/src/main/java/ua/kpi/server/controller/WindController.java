@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static java.util.stream.Collectors.*;
-import static ua.kpi.server.controller.ApiConstants.DATE_TIME_FORMAT;
+import static ua.kpi.server.common.ApiConstants.DATE_TIME_FORMAT;
 
 @Transactional
 @RestController

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static ua.kpi.server.controller.ApiConstants.DATE_TIME_FORMAT;
+import static ua.kpi.server.common.ApiConstants.DATE_TIME_FORMAT;
 
 
 @Transactional

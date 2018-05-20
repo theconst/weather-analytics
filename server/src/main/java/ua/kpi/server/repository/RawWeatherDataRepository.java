@@ -3,13 +3,11 @@ package ua.kpi.server.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
-import ua.kpi.server.model.RawWeatherData;
-import ua.kpi.server.model.TemperatureDataPointProjection;
-import ua.kpi.server.model.WindSpeedAndDirectionProjection;
-import ua.kpi.server.model.WindSpeedProjection;
+import ua.kpi.server.model.*;
 
 import javax.persistence.QueryHint;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.hibernate.jpa.QueryHints.HINT_FETCH_SIZE;
@@ -36,5 +34,8 @@ public interface RawWeatherDataRepository extends EagerStreamingPagingAndSorting
             "WHERE w.timestamp BETWEEN :from AND :to " +
             "ORDER BY w.timestamp")
     Stream<WindSpeedAndDirectionProjection> findWindSpeedAndDirectionBetweenOrderByTimestamp(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+
+    @Query("SELECT min(w.timestamp) as from, max(w.timestamp) as to FROM RawWeatherData w")
+    List<TimeRange> getTimeRange();
 
 }

@@ -16,7 +16,6 @@ public class WindDirectionAttributeConverter implements AttributeConverter<WindD
 
     private static final Map<WindDirection, String> WIND_DIRECTION_TO_LOCALIZED_STRING = new HashMap<>();
 
-    // TODO: externalize configuration
     static {
         LOCALIZED_WIND_DIRECTION_TO_WIND_DIRECTION.put("Северный", NORTH);
         LOCALIZED_WIND_DIRECTION_TO_WIND_DIRECTION.put("Южный", SOUTH);

@@ -18,7 +18,7 @@ public class TimeController {
 
     private final RawWeatherDataRepository weatherDataRepository;
 
-    @GetMapping("/")
+    @GetMapping("/range")
     public TimeRange getWindDataBetween() {
         return weatherDataRepository.getTimeRange().stream()
                 .findFirst()

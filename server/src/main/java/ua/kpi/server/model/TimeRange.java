@@ -11,7 +11,7 @@ public interface TimeRange {
     @JsonFormat(pattern = DATE_TIME_FORMAT)
     LocalDateTime getFrom();
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = DATE_TIME_FORMAT  )
     LocalDateTime getTo();
 
 }

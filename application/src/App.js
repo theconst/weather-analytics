@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(`/timeData/range`)
+    fetch(`${config.server}/timeData/range`)
       .then(resp => resp.json())
       .then(timeRange => {
           this.setState({

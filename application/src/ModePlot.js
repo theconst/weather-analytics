@@ -35,7 +35,28 @@ export class ModePlot extends AbstractUnmountablePlot {
                             data: this.state.data,
                         },
                     ],
-                }} />
+                }} 
+                options={{
+                    title: {
+                        display: true,
+                        text: this.props.title,
+                    },
+                    scales: {
+                        yAxes: [{
+                          scaleLabel: {
+                            display: true,
+                            labelString: this.props.yLabel,
+                          }
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                              display: true,
+                              labelString: this.props.xLabel,
+                            }
+                          }]
+                    },
+                }}
+                />
         );
     }
 }

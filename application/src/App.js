@@ -58,27 +58,36 @@ class App extends Component {
                   key="temperatureTimePlot" 
                   endpoint={`${config.server}/temperatureData`}
                   functionName="temperature"
-                  datasetLabel={config.plotsNames.tempTimePlot}
+                  xLabel="Час"
+                  yLabel="Температура, °C"
+                  datasetLabel={`${this.state.startDate}-${this.state.endDate}`}
+                  title={config.plotsNames.tempTimePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <ModePlot 
                   key="temperatureModePlot" 
                   endpoint={`${config.server}/temperatureData`}
                   functionName="temperature"
-                  datasetLabel={config.plotsNames.tempModePlot}
+                  xLabel="Температура, °C"
+                  yLabel="Тривалість, год"
+                  datasetLabel={`${this.state.startDate}-${this.state.endDate}`}
+                  title={config.plotsNames.tempModePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <ModePlot 
                   key="windModePlot"
                   endpoint={`${config.server}/windData/speed`}
                   functionName="windSpeed"
-                  datasetLabel={config.plotsNames.windModePlot}
+                  xLabel="Швидкість вітру, м/с"
+                  yLabel="Тривалість, год"
+                  datasetLabel={`${this.state.startDate}-${this.state.endDate}`}
+                  title={config.plotsNames.windModePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
               <RosePlot 
                   key="windRosePlot"
                   endpoint={`${config.server}/windData/rose`}
-                  datasetLabel={config.plotsNames.windModePlot}
+                  title={config.plotsNames.windRosePlot}
                   startDate={this.state.submittedStart} 
                   endDate={this.state.submittedEnd} />
           </Carousel>,

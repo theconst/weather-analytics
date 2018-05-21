@@ -33,6 +33,13 @@ export class RosePlot extends AbstractUnmountablePlot {
                 }}
                 options = {{
                     startAngle: STARTING_ANGLE,
+                    title: {
+                        display: true,
+                        text: this.props.title,
+                    },
+                    legend: {
+                        display: false
+                    },
                 }} />
         );
     }

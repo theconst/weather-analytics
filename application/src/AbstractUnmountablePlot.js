@@ -21,7 +21,7 @@ export class AbstractUnmountablePlot extends Component {
 
     updatePlot() {
         if (this.props.startDate != null && this.props.endDate != null) {
-            fetch(`/${this.props.endpoint}?from=${this.props.startDate}&to=${this.props.endDate}`)
+            fetch(`${this.props.endpoint}?from=${this.props.startDate}&to=${this.props.endDate}`)
                 .then(resp => resp.json())
                 .then(data => this._isMounted && this._handleDataset(data))
                 .catch(e => this._handleError(e));

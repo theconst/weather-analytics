@@ -24,6 +24,10 @@ export class TimePlot extends AbstractUnmountablePlot {
             <Line 
                 key="temperatureTimePlot"
                 options={{
+                    title: {
+                        display: true,
+                        text: this.props.title,
+                    },
                     scales: {
                         xAxes: [{
                             type: 'time',
@@ -31,8 +35,18 @@ export class TimePlot extends AbstractUnmountablePlot {
                                 displayFormats: {
                                     quarter: 'MMM YYYY'
                                 }
-                            }
-                        }]
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: this.props.xLabel,
+                            },
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: this.props.yLabel,
+                            },
+                        }],
                     },
                 }}
             

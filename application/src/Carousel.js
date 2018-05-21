@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import './Carousel.css'
 import * as back from './back.svg';
 import * as next from './next.svg';
+
+import React, { Component } from 'react';
 
 export class Carousel extends Component {
 
@@ -26,15 +28,15 @@ export class Carousel extends Component {
      render() {
          return (
              //TODO: parametrize css to make carousel reusable
-             <div className="carousel">
-                <img className="carousel__btn carousel__btn--left"
+             <div className={`carousel carousel--${this.props.modifier}`}>
+                <img className="carousel__btn carousel__btn--pos--left"
                     onClick={this.next.bind(this, 'left')}
                     src={back}
                     alt="Left" />
                 <div className="carousel__item">
                     {this.props.children[this.state.currentNo]}
                 </div>
-                <img className="carousel__btn carousel__btn--right"
+                <img className="carousel__btn carousel__btn--pos--right"
                     onClick={this.next.bind(this, 'right')}
                     src={next}
                     alt="Right" />

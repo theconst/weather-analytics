@@ -49,11 +49,15 @@ class App extends Component {
       return [
           <nav key="nav-bar" className="navigation-bar">
               <ul className="navigation-bar__items">
-                  <li key="-1" className="navigation-bar__item navigation-bar__item--heading"><a>{config.heading}</a></li>
-                  {config.tabNames.map((name, i) => <li key={i} className="navigation-bar__item"><a>{name}</a></li>)}
+                  <li key="-1" className="navigation-bar__item navigation-bar__item--heading">
+                    <a className="navigation-bar__link">{config.heading}</a>
+                  </li>
+                  {config.tabNames.map((name, i) => <li key={i} className="navigation-bar__item">
+                        <a className="navigation-bar__link">{name}</a>
+                  </li>)}
               </ul>
           </nav>,
-          <Carousel key="plot">
+          <Carousel key="plot" modifier="plot">
               <TimePlot 
                   key="temperatureTimePlot" 
                   endpoint={`${config.server}/temperatureData`}

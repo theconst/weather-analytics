@@ -1,28 +1,79 @@
-.App {
+#root {
+  display: block;
+}
+
+.navigation-bar {  
+  width: 100%;
+}
+
+.navigation-bar__items {  
+  width: 100%;
+  background-color: whitesmoke;
+  list-style-type: none;
+  overflow: hidden;
+  margin: 0;
+  top: 0;
+  padding: 0;
+}
+
+.navigation-bar__item {
+  float: left;
+}
+
+.navigation-bar__link {
+  font-weight: bold;
+  display: block;
+  color: black;
   text-align: center;
+  padding: 20px 30px;
+  text-decoration: none;
+  cursor: default;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.navigation-bar__item:hover {
+  background-color: rgb(216, 229, 252);
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.navigation-bar__item--heading {
+  background-color: rgb(216, 229, 252);
 }
 
-.App-title {
-  font-size: 1.5em;
+.input-area {
+  float: right;
+  width: 25%;
 }
 
-.App-intro {
-  font-size: large;
+.input-area__title {
+   text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.carousel--plot {
+  position: relative;
+  float: left;
+  width: 75%;
+}
+
+.input-area__item {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 15px;
+  height : 40px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: whitesmoke;
+  box-shadow: none;
+  border: none;
+  width: 92%;
+}
+
+.input-area__item--submit:hover {
+  background-color: rgb(216, 229, 252);
+}
+
+.footer {
+  position: absolute;
+  text-align: center;
+  margin: 5px;
+  bottom: 0;
 }

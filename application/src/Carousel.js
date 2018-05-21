@@ -25,6 +25,7 @@ export class Carousel extends Component {
  
      render() {
          return (
+             //TODO: parametrize css to make carousel reusable
              <div className="carousel">
                 <img className="carousel__btn carousel__btn--left"
                     onClick={this.next.bind(this, 'left')}
